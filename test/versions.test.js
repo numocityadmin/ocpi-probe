@@ -1,12 +1,13 @@
 const {expect} = require('chai');
 const fetch = require('node-fetch');
 const {cpoPort} = require('./server-starter');
+
 const urlbase = `http://localhost:${cpoPort}`;
+const versionsUrl = `${urlbase}/versions`;
 
 it('reports version + endpoints', ()=> {
-  return fetch(`${urlbase}/versions`, {
-    headers: {'Authorization': 'something'},
-  }).then((res)=> {
+  const knownToken = {headers: {'Authorization': 'Token AAA_AAA_AAA'}};
+  return fetch(versionsUrl, knownToken).then((res)=> {
     expect(res.status).equals(200);
     return res.json();
   }).then((bodyInJson)=> {
@@ -18,7 +19,18 @@ it('reports version + endpoints', ()=> {
 });
 
 // status as per https://github.com/ocpi/ocpi/blob/master/transport_and_format.asciidoc
-it('responds 401-Unauthorized when invoked without a token', ()=> {
-  return fetch(`${urlbase}/versions`).then((res)=>
-    expect(res.status).equals(401));
+const statusIsUnauthorized = (res)=> expect(res.status).equals(401);
+
+it('responds 401-Unauthorized when invoked without a header', ()=> {
+  return fetch(versionsUrl).then(statusIsUnauthorized);
+});
+
+it('responds 401-Unauthorized when token is missing from header', ()=> {
+  const missingToken = {headers: {'Authorization': 'something'}};
+  return fetch(versionsUrl, missingToken).then(statusIsUnauthorized);
+});
+
+it('responds 401-Unauthorized when token in header is unknown', ()=> {
+  const unknownToken = {headers: {'Authorization': 'Token non-existent'}};
+  return fetch(versionsUrl, unknownToken).then(statusIsUnauthorized);
 });
