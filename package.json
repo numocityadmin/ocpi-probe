@@ -1,0 +1,33 @@
+{
+  "name": "ocpi-probe",
+  "version": "1.0.0",
+  "description": "OCPI endpoints to test validity of requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/numocityadmin/ocpi-probe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/numocityadmin/ocpi-probe/blob/main/README.md",
+  "devDependencies": {
+    "@stryker-mutator/core": "^4.1.2",
+    "@stryker-mutator/mocha-runner": "^4.1.2",
+    "chai": "^4.2.0",
+    "eslint": "^7.15.0",
+    "eslint-config-google": "^0.14.0",
+    "jscpd": "^3.3.23",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
+    "tree-kill": "^1.2.2"
+  },
+  "dependencies": {
+    "argparse": "^1.0.10",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
+  }
+}

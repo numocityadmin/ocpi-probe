@@ -1,0 +1,9 @@
+.eslintignore
+test
+checkmycode.sh
+coverage
+reports
+.nyc_output
+stryker.conf.json
+.dockerignore
+gates
