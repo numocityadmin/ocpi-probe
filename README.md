@@ -26,3 +26,9 @@ Run the server locally to listen on port 9033 (or any other free port on your sy
 ```bash
 node start.js -p 9033
 ```
+
+## Check
+
+Navigate to http://localhost:9033 on your browser.
+
+If you see a response with the version, then the server has started successfully.
