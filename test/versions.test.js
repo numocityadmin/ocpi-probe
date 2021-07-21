@@ -1,20 +1,27 @@
 const {expect} = require('chai');
 const fetch = require('node-fetch');
-const {cpoPort} = require('./server-starter');
 
-const urlbase = `http://localhost:${cpoPort}`;
-const versionsUrl = `${urlbase}/versions`;
+const {versionsUrl, endpointsUrl, credentialsUrl, knownToken} =
+  require('./endpoints-token');
 
-it('reports version + endpoints', ()=> {
-  const knownToken = {headers: {'Authorization': 'Token AAA_AAA_AAA'}};
-  return fetch(versionsUrl, knownToken).then((res)=> {
-    expect(res.status).equals(200);
-    return res.json();
-  }).then((bodyInJson)=> {
-    expect(bodyInJson.version).equals('2.2');
+const resIsOkJson = (res)=> {
+  expect(res.status).equals(200);
+  return res.json();
+};
+
+it('reports supported versions on GET of /versions', ()=> {
+  return fetch(versionsUrl, knownToken).then(resIsOkJson).then((bodyInJson)=> {
+    expect(bodyInJson[0].version).equals('2.2');
+    expect(bodyInJson[0].url).equals(endpointsUrl);
+  });
+});
+
+it('reports endpoints on GET of /ocpi/2.2', ()=> {
+  return fetch(endpointsUrl, knownToken).then(resIsOkJson).then((bodyInJson)=> {
+    expect(bodyInJson.version).is.not.undefined;
     const credEndpoint = bodyInJson.endpoints[0];
     expect(credEndpoint.identifier).equals('credentials');
-    expect(credEndpoint.url).includes(urlbase);
+    expect(credEndpoint.url).equals(credentialsUrl);
   });
 });
 

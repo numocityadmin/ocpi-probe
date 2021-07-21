@@ -1,3 +1,9 @@
+const {hostFromReq} = require('./hostfromreq');
+
+const supportedVersions = (host)=> [{
+  version: '2.2',
+  url: `${host}/ocpi/2.2/`,
+}];
 
 const supportedEndpoints = (host)=> ({
   version: '2.2',
@@ -11,11 +17,12 @@ const supportedEndpoints = (host)=> ({
 });
 
 function addRoutes(app) {
-  app.get('/versions', (req, res)=> {
-    res.send(JSON.stringify(
-        supportedEndpoints(`${req.protocol}://${req.get('host')}`),
-    ));
-  });
+  const supportedInfoSender = (supportedContent)=> (req, res)=> {
+    res.send(JSON.stringify(supportedContent(hostFromReq(req))),
+    );
+  };
+  app.get('/versions', supportedInfoSender(supportedVersions));
+  app.get('/ocpi/2.2', supportedInfoSender(supportedEndpoints));
 }
 
 module.exports = {addRoutes};

@@ -3,6 +3,7 @@ const {reqIsAuthorized} = require('./authCheck');
 
 function startServer(port) {
   const app = express();
+  app.use(express.json());
   app.use(reqIsAuthorized);
   app.get('/', (_, res)=> {
     res.send(`{
@@ -11,6 +12,7 @@ function startServer(port) {
   }`);
   });
   require('./versions').addRoutes(app);
+  require('./credentials').addRoutes(app);
   app.listen(port, ()=> console.log(`started listening on port ${port}`));
 }
 
