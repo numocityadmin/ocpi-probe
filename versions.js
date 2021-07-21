@@ -18,8 +18,7 @@ const supportedEndpoints = (host)=> ({
 
 function addRoutes(app) {
   const supportedInfoSender = (supportedContent)=> (req, res)=> {
-    res.send(JSON.stringify(supportedContent(hostFromReq(req))),
-    );
+    res.json(supportedContent(hostFromReq(req)));
   };
   app.get('/versions', supportedInfoSender(supportedVersions));
   app.get('/ocpi/2.2', supportedInfoSender(supportedEndpoints));
