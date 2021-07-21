@@ -17,7 +17,7 @@ const credentialsFromEMSP = ({
 
 // Status code according to https://github.com/ocpi/ocpi/blob/master/status_codes.asciidoc#status_codes_3xxx_server_errors
 it('returns 3001 when credentials POSTed without GET on EMSP-versions URL',
-    ()=> {
+    function() {
       const headersPart = knownToken;
       headersPart.headers['Content-Type'] = 'application/json';
       return fetch(credentialsUrl, {

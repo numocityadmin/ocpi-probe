@@ -15,12 +15,17 @@ const credentialsResponse = (host)=> ({
 });
 
 async function isCompatible2dot2(credentials) {
-  console.log(`getting versions from emsp ${credentials.url}`);
-  const res = await fetch(credentials.url,
-      {headers: {Authorization: `Token ${credentials.token}`}});
-  const bodyInJson = await(res.json());
-  const compatibleVersions = bodyInJson.filter((x)=> x.version == '2.2');
-  return compatibleVersions.length >= 1;
+  try {
+    console.log(`getting versions from emsp ${credentials.url}`);
+    const res = await fetch(credentials.url,
+        {headers: {Authorization: `Token ${credentials.token}`}});
+    const bodyInJson = await(res.json());
+    const compatibleVersions = bodyInJson.filter((x)=> x.version == '2.2');
+    return compatibleVersions.length >= 1;
+  } catch (err) {
+    console.log(`error connecting to ${credentials.url}: ${err.message}`);
+    return false;
+  }
 }
 
 function addRoutes(app) {
