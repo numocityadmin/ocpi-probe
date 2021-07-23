@@ -22,6 +22,7 @@
     "eslint-config-google": "^0.14.0",
     "jscpd": "^3.3.23",
     "mocha": "^8.2.1",
+    "nock": "^13.1.1",
     "nyc": "^15.1.0",
     "tree-kill": "^1.2.2"
   },
