@@ -41,4 +41,5 @@ However, for testing, you can use the same token any number of times with this s
 - [Credentials](https://github.com/ocpi/ocpi/blob/master/credentials.asciidoc)
 
 For registration (Token A), use token: AAA_AAA_AAA
+
 Token B (POSTed on credentials) is not persisted by this server.
