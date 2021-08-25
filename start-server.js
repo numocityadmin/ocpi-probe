@@ -13,6 +13,7 @@ function startServer(port) {
   });
   require('./versions').addRoutes(app);
   require('./credentials').addRoutes(app);
+  require('./locations').addRoutes(app);
   app.listen(port, ()=> console.log(`started listening on port ${port}`));
 }
 

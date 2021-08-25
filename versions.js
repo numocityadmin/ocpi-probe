@@ -12,6 +12,10 @@ const supportedEndpoints = (host)=> ({
       identifier: 'credentials',
       role: 'RECEIVER',
       url: `${host}/ocpi/2.2/credentials/`,
+    }, {
+      identifier: 'locations',
+      role: 'SENDER',
+      url: `${host}/ocpi/2.2/locations/`,
     },
   ],
 });
