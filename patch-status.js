@@ -1,12 +1,17 @@
 const fetch = require('node-fetch');
+const {outgoingToken} = require('./tokens-for-probe');
 
 async function patchStatus(patchUrl, status) {
-  console.log(`patching ${status} to ${patchUrl}`);
+  console.log(`patching ${status} to ${patchUrl} with token ${outgoingToken}`);
   const res = await fetch(patchUrl, {
     method: 'patch',
-    body: {status, last_updated: new Date().toJSON()},
+    body: JSON.stringify({status, last_updated: new Date().toJSON()}),
+    headers: {
+      'Authorization': `Token ${outgoingToken}`,
+      'Content-Type': 'application/json',
+    },
   });
-  console.log(`patch status received: ${res.status}`);
+  console.log(`patch status response: ${res.status}`);
 }
 
 module.exports = {patchStatus};

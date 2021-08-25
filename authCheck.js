@@ -3,7 +3,7 @@ const {knownToken, incomingToken} = require('./tokens-for-probe');
 function authRequired(req) {
   // All paths except the root require authorization.
   // This is to enable one GET to always succeed for trouble-shooting.
-  return req.originalUrl != '/';
+  return req.originalUrl != '/' && req.originalUrl != '/favicon.ico';
 }
 
 function tokenIn(headers) {
@@ -19,10 +19,10 @@ function tokenIn(headers) {
 function tokenIsAuthorized(req) {
   const headers = req.headers;
   const req2token = [
-    {pattern: /versions/, tokens: [knownToken]},
-    {pattern: /credentials/, tokens: [knownToken]},
+    {pattern: /versions/, tokens: [knownToken, incomingToken]},
+    {pattern: /credentials/, tokens: [knownToken, incomingToken]},
     {pattern: /locations/, tokens: [incomingToken]},
-    {pattern: /ocpi\/2\.2[/]?$/, tokens: [knownToken]},
+    {pattern: /ocpi\/2\.2[/]?$/, tokens: [knownToken, incomingToken]},
   ];
   console.log(`  authorizing ${req.originalUrl}
     with header ${JSON.stringify(headers)}`);

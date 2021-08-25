@@ -36,8 +36,10 @@ it('fetches an endpoint when it exists', async ()=> {
 
 it('talks to locations endpoint as passed from command line', async ()=> {
   setupReceiverMock();
+  const status = 'CHARGING';
   nock(locationsUrl).patch('/IN/NMC/LOC0001/EVSE01', (body)=> {
-    // TODO: Assert the body here
+    expect(body.status).equals(status);
+    expect(body.last_updated).is.not.undefined;
     return true;
   }).reply(200);
 
@@ -45,7 +47,7 @@ it('talks to locations endpoint as passed from command line', async ()=> {
     versions: 'http://example-emsp.com/ocpi/versions/',
     location: 'LOC0001',
     evse: 'EVSE01',
-    status: 'Available',
+    status,
   };
   expect(await talkToEndpoints(parsedCmdline)).to.be.true;
 });

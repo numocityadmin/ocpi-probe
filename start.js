@@ -10,7 +10,7 @@ parser.addArgument(
 parser.addArgument(
     ['-s', '--status'], {
       help: 'Patch status of location LOC0001, EVSE01',
-      choices: ['Available', 'Unavailable']},
+      choices: ['AVAILABLE', 'CHARGING']},
 );
 
 const port = parser.parseArgs().port;

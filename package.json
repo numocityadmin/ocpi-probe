@@ -1,6 +1,6 @@
 {
   "name": "ocpi-probe",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "OCPI endpoints to test validity of requests",
   "main": "index.js",
   "scripts": {

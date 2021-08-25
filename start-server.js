@@ -6,10 +6,10 @@ function startServer(port) {
   app.use(express.json());
   app.use(reqIsAuthorized);
   app.get('/', (_, res)=> {
-    res.send(`{
-    "utility": "cpo interface",
-    "version": "${require('./package.json').version}"
-  }`);
+    res.json({
+      utility: 'cpo interface',
+      version: `${require('./package.json').version}`,
+    });
   });
   require('./versions').addRoutes(app);
   require('./credentials').addRoutes(app);
