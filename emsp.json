@@ -1,0 +1,8 @@
+{
+    "idTag":"nceey3khks75r5i9",
+    "startSessionURL":"http://localhost:8000/emsp/ocpi/2.2/commands/START_SESSION/1234",
+    "stopSessionURL":"http://localhost:8000/emsp/ocpi/2.2/commands/STOP_SESSION/1234",
+    "evseWithConnectorId":"/numotry/CPO/CPIDKACP001-1",
+    "emspVersionsPath":"/emsp/versions",
+    "emspEndPointsPath":"/emsp/endpoints"
+}
