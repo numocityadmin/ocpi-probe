@@ -6,7 +6,18 @@ async function fetchToken(token){
     return await storage.recallOne({collectionName, identifier: token});
 }
 
+async function upsertSession(body){
+    await storage.connect();
+    await storage.upsert(
+        {collectionName, 
+            parameters: {
+                identifier:'SessionObject',
+                body
+            } });
+}
+
 module.exports={
     collectionName,
     fetchToken,
+    upsertSession,
 }

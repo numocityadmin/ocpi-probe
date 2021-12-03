@@ -4,10 +4,22 @@ const bodyParser= require('body-parser');
 const storage = require('@numocity-admin/schemaless-mongo');
 const collectionName= 'emsp_ocpi_tokens';
 const fs= require('fs');
+const { upsertSession } = require('./tokens');
+const { checkAuth } = require('./auth');
 const emspRecord = JSON.parse(fs.readFileSync('emsp.json'));
 
 const port = 8000;
 const app= express();
+const tokenBforOCPI={
+    token: 'tokenBfromEMSP',
+    url: `http://localhost:8000/emsp/versions/`,
+    roles: [{
+      role: 'EMSP',
+      party_id: 'EMSP01',
+      country_code: 'IN',
+      business_details: {name: 'EMSP name'},
+    }],
+  }
 app.listen(port);
 app.use(bodyParser.json());
 app.get(emspRecord.emspVersionsPath,function(req,res){
@@ -17,7 +29,7 @@ app.get(emspRecord.emspVersionsPath,function(req,res){
 }])
 })
 app.get(emspRecord.emspEndPointsPath,function(req,res){
-    res.send([{
+    res.send({
     versions:'2.2',
     endPoints:[{
         identifier: 'locations',
@@ -33,20 +45,50 @@ app.get(emspRecord.emspEndPointsPath,function(req,res){
         url: 'http://localhost:8000/emsp/ocpi/2.2/sessions',
       },
       ]
-}])
 })
-app.post('/emsp/ocpi/2.2/commands/START_SESSION/1234',function(req,res){
-    console.log(req.body.result);
+})
+app.post('/emsp/ocpi/2.2/commands/START_SESSION/1234',async function(req,res){
+    const auth=await checkAuth(req.headers.authorization);
     console.log(req.body);
-    storeSessionId(req.body.sessionID);
+    console.log(auth);
+    if(auth){
+        console.log(req.body.result);
+        await storeSessionId(req.body.sessionId);
+    }else{
+        res.send({
+            statusCode:2001,
+            statusMessage:'Invalid Auth Header'
+        })
+    }
 })
 
-app.post('/emsp/ocpi/2.2/commands/STOP_SESSION/1234',function(req,res){
-    console.log(req.body.result);
+app.post('/emsp/ocpi/2.2/commands/STOP_SESSION/1234',async function(req,res){
+    const auth=await checkAuth(req.headers.authorization);
+    console.log(req.headers.authorization);
+    console.log(auth);
+    if(auth){
+        console.log(req.body.result);
+    }else{
+        res.send({
+            statusCode:2001,
+            statusMessage:'Invalid Auth Header'
+        })
+    }
 })
 
-app.put('/emsp/ocpi/2.2/sessions',function(req,res){
-    console.log(req);
+app.put('/emsp/ocpi/2.2/sessions',async function(req,res){
+    console.log(req.headers.authorization);
+    const auth=await checkAuth(req.headers.authorization);
+    if(auth){
+    console.log(req.body);
+    upsertSession(req.body);
+    res.send('session updated');
+    }else{
+    res.send({
+        statusCode:2001,
+        statusMessage:'Invalid Auth Header'
+    })
+}
 })
 
 async function gettingVersions(){
@@ -69,16 +111,7 @@ async function gettingEndPoints(versions){
 
 async function postTokenB(credentials){
     console.log(credentials.url);
-    await axios.post(credentials.url,{
-            token: 'tokenBfromEMSP',
-            url: `http://localhost:8000/emsp/versions/`,
-            roles: [{
-              role: 'EMSP',
-              party_id: 'EMSP01',
-              country_code: 'IN',
-              business_details: {name: 'EMSP name'},
-            }],
-          },
+    await axios.post(credentials.url,tokenBforOCPI,
           {headers: {Authorization: 'Token AAA_AAA_AAA'}},
          )
         .then(async (res)=>{
@@ -96,6 +129,10 @@ async function storetheResult(commands,sessions,tokenC){
     }
     await storage.connect();
     await storage.upsert({collectionName, parameters: result});
+    await storage.upsert({collectionName,parameters:{
+        identifier:'TokenB',
+        token:tokenBforOCPI.token,
+    }})
 }
 
 
@@ -121,7 +158,6 @@ async function storeSessionId(id){
         await storage.connect();
         await storage.upsert({collectionName, parameters: sessionID });
 }
-
 
 async function completeProcess(){
  const commandsEndpoint=await credentialsHandShake();

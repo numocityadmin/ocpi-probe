@@ -6,6 +6,7 @@ async function stopSession(){
     const emspRecord = JSON.parse(fs.readFileSync('emsp.json'));
     console.log(emspRecord);
     const sessionRecord= await fetchToken('SessionID');
+    console.log(sessionRecord);
     const record = await fetchToken('tokenCWithEndpoints');
     const url = record.commandsEndpoint.url.concat('STOP_SESSION');
     console.log(url);
