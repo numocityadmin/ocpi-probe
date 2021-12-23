@@ -1,0 +1,19 @@
+---
+docker_image:
+  name: "ocpi-probe"
+  tag: "1.0.0"
+
+generate_individual_dc: false
+compose_file_version: "3.7"
+
+docker_compose:
+  container_1:
+    container_name: ocpi_probe
+    #image: This tag will be generated dynamically by the script.
+    ports:
+      - { host_port: 6000, container_port: 6000, expose: true }
+    env_files:
+      - /opt/ncms/.env.ncms.ocpiprobe
+    networks:
+      - bridge
+    restart: always # Optional, default is always
