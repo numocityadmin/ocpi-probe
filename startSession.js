@@ -1,24 +1,28 @@
 const {fetchToken}=require('./tokens');
-const axios= require('axios');
 const fs= require('fs');
+const axios= require('axios');
 
-async function startSession(){
-    const emspRecord = JSON.parse(fs.readFileSync('emsp.json'));
-    const record = await fetchToken('tokenCWithEndpoints');
-    const url = record.commandsEndpoint.url.concat('START_SESSION');
-    console.log(url);
-    await axios.post(url,
-        {
-            response_url: emspRecord.startSessionURL,
-            location_id: 1234,
-            token: emspRecord.idTag,
-            evse_uid: emspRecord.evseWithConnectorId,
-        },
-        {headers: {Authorization: `Token ${record.token}`}}
-        ).catch(err=>{console.log(err);})
+
+async function startSession() {
+  const emsprecord = JSON.parse(fs.readFileSync('emsp.json'));
+  const tokenRecord = await fetchToken('tokenCWithEndpoints');
+  const url = tokenRecord.commandsEndpoint.url.concat('START_SESSION');
+  console.log(url);
+  const resURL=process.env.OCPI_PROBE_BASEURL
+      .concat('/emsp/commands/START_SESSION');
+  await axios.post(url,
+      {
+        response_url: resURL,
+        location_id: 1234,
+        token: emsprecord.idTag,
+        evse_uid: emsprecord.evseWithConnectorId,
+      },
+      {headers: {Authorization: `Token ${tokenRecord.token}`}},
+  ).catch((err)=>{
+    console.log('error'+err);
+  });
 }
 
 startSession();
-
 
 
