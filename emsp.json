@@ -1,6 +1,5 @@
 {
     "idTag":"RFIDSAN",
     "evseWithConnectorId":"/numorbml/CPO/TEST01-1",
-    "ocppVersionsURL":"http://localhost:7904/api/versions",
     "token":"AAA_AAA_AAA"
 }

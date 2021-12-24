@@ -8,7 +8,7 @@ const {upsertSession} = require('./tokens');
 const {checkAuth} = require('./auth');
 const emspRecord = JSON.parse(fs.readFileSync('emsp.json'));
 
-const port = 8000;
+const port = 6000;
 const app= express();
 const versionsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/versions');
 const endPointsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/endpoints');
@@ -98,7 +98,7 @@ app.put('/emsp/sessions', async function(req, res) {
 });
 
 async function gettingVersions() {
-  const versions=await axios.get(emspRecord.ocppVersionsURL,
+  const versions=await axios.get(process.env.ocppVersionsURL,
       {headers: {Authorization: `Token ${emspRecord.token}`}});
   const compatibleVersions=versions.data.data.filter((x)=> x.version == '2.2');
   return compatibleVersions[0];
