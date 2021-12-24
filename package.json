@@ -4,6 +4,7 @@
   "description": "OCPI endpoints to test validity of requests",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "npx mocha --exit"
   },
   "repository": {
