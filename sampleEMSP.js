@@ -90,7 +90,7 @@ app.put('/emsp/sessions', async function(req, res) {
   const auth=await checkAuth(req.headers.authorization);
   if (auth) {
     console.log(req.body);
-    upsertSession(req.body);
+    // upsertSession(req.body);
     res.send('session updated');
   } else {
     res.send(invalidAuth);
