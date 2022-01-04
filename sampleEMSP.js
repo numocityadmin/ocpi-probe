@@ -10,11 +10,6 @@ const {collectionName}=require('./tokens');
 
 const port = 6000;
 const app= express();
-storage.connect();
-storage.upsert({collectionName, parameters: {
-  identifier: 'TokenB',
-  token: 'tokenBfromEMSP',
-}});
 const versionsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/versions');
 const endPointsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/endpoints');
 const locationsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/locations');

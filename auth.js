@@ -1,6 +1,12 @@
 const {fetchToken}=require('./tokens');
+const storage = require('@numocity-admin/schemaless-mongo');
 
 async function checkAuth(authorization) {
+  await storage.connect();
+  await storage.upsert({collectionName, parameters: {
+  identifier: 'TokenB',
+  token: 'tokenBfromEMSP',
+}});
   const tokenB=authorization.split(' ');
   const tokenRecord=await fetchToken('TokenB');
   console.log('tokenRecord :'+tokenRecord);
