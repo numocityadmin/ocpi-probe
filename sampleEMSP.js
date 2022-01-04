@@ -14,9 +14,9 @@ const versionsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/versions');
 const endPointsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/endpoints');
 const locationsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/locations');
 const commandsURL=process.env.OCPI_PROBE_BASEURL
-    .concat('/emsp/ocpi/2.2/commands/');
+    .concat('/emsp/commands/');
 const sessionsURL=process.env.OCPI_PROBE_BASEURL
-    .concat('/emsp/ocpi/2.2/sessions');
+    .concat('/emsp/sessions');
 const invalidAuth={
   statusCode: 2001,
   statusMessage: 'Invalid Auth Header',
