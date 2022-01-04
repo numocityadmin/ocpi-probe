@@ -2,11 +2,11 @@ const axios = require('axios');
 const express = require('express');
 const bodyParser= require('body-parser');
 const storage = require('@numocity-admin/schemaless-mongo');
-const collectionName= 'emsp_ocpi_tokens';
 const fs= require('fs');
 // const {upsertSession} = require('./tokens');
 const {checkAuth} = require('./auth');
 const emspRecord = JSON.parse(fs.readFileSync('emsp.json'));
+const {collectionName}=require('./tokens');
 
 const port = 6000;
 const app= express();
@@ -137,7 +137,7 @@ async function storetheResult(commands, sessions, tokenC) {
   await storage.connect();
   await storage.upsert({collectionName, parameters: result});
   await storage.upsert({collectionName, parameters: {
-    identifier: 'TokenB',
+    identifier:'TokenB',
     token: tokenBforOCPI.token,
   }});
 }
