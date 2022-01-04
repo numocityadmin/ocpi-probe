@@ -85,7 +85,7 @@ app.post('/emsp/commands/STOP_SESSION',
       }
     });
 
-app.put('/emsp/sessions', async function(req, res) {
+app.put('/emsp/ocpi/2.2/sessions', async function(req, res) {
   console.log(req.headers.authorization);
   const auth=await checkAuth(req.headers.authorization);
   if (auth) {
