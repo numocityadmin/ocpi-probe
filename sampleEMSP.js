@@ -4,7 +4,7 @@ const bodyParser= require('body-parser');
 const storage = require('@numocity-admin/schemaless-mongo');
 const collectionName= 'emsp_ocpi_tokens';
 const fs= require('fs');
-const {upsertSession} = require('./tokens');
+// const {upsertSession} = require('./tokens');
 const {checkAuth} = require('./auth');
 const emspRecord = JSON.parse(fs.readFileSync('emsp.json'));
 
