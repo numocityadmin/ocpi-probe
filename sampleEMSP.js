@@ -4,7 +4,6 @@ const bodyParser= require('body-parser');
 const storage = require('@numocity-admin/schemaless-mongo');
 const fs= require('fs');
 // const {upsertSession} = require('./tokens');
-const {checkAuth} = require('./auth');
 const emspRecord = JSON.parse(fs.readFileSync('emsp.json'));
 const {collectionName}=require('./tokens');
 
@@ -17,10 +16,10 @@ const commandsURL=process.env.OCPI_PROBE_BASEURL
     .concat('/emsp/commands/');
 const sessionsURL=process.env.OCPI_PROBE_BASEURL
     .concat('/emsp/sessions');
-const invalidAuth={
-  statusCode: 2001,
-  statusMessage: 'Invalid Auth Header',
-};
+// const invalidAuth={
+//   statusCode: 2001,
+//   statusMessage: 'Invalid Auth Header',
+// };
 const tokenBforOCPI={
   token: 'tokenB',
   url: versionsURL,
@@ -63,38 +62,20 @@ app.get('/emsp/endpoints', function(req, res) {
   });
 });
 app.post('/emsp/commands/START_SESSION',
+// Todo : auth of token B
     async function(req, res) {
-      const authorization=await checkAuth(req.headers.authorization);
-      if (authorization) {
-        console.log(req.body.result);
-        await storeSessionId(req.body.sessionId);
-      } else {
-        res.send(invalidAuth);
-      }
+      console.log(req.body.result);
     });
 
 app.post('/emsp/commands/STOP_SESSION',
-    async function(req, res) {
-      const auth=await checkAuth(req.headers.authorization);
-      console.log(req.headers.authorization);
-      console.log(auth);
-      if (auth) {
-        console.log(req.body.result);
-      } else {
-        res.send(invalidAuth);
-      }
+// Todo : auth of token B
+    async function(request, res) {
+      console.log(request.body.result);
     });
 
 app.put('/emsp/sessions', async function(req, res) {
-  console.log(req.headers.authorization);
-  const auth=await checkAuth(req.headers.authorization);
-  if (auth) {
-    console.log(req.body);
-    // upsertSession(req.body);
-    res.send('session updated');
-  } else {
-    res.send(invalidAuth);
-  }
+  // Todo : auth of token B
+  console.log(req.body);
 });
 
 async function gettingVersions() {
@@ -157,14 +138,14 @@ async function credentialsHandShake() {
   return commandsEndpoints[0];
 }
 
-async function storeSessionId(id) {
-  const sessionID={
-    identifier: 'SessionID',
-    sessionId: id,
-  };
-  await storage.connect();
-  await storage.upsert({collectionName, parameters: sessionID});
-}
+// async function storeSessionId(id) {
+//   const sessionID={
+//     identifier: 'SessionID',
+//     sessionId: id,
+//   };
+//   await storage.connect();
+//   await storage.upsert({collectionName, parameters: sessionID});
+// }
 
 async function completeProcess() {
   await credentialsHandShake();
