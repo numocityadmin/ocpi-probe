@@ -8,6 +8,10 @@ const emspRecord = JSON.parse(fs.readFileSync('emsp.json'));
 const {collectionName}=require('./tokens');
 
 const port = 6000;
+if (process.env.OCPI_PROBE_BASEURL == null) {
+  process.env.OCPI_PROBE_BASEURL = `http://localhost:${port}`;
+  console.log(`set self url to ${process.env.OCPI_PROBE_BASEURL}`);
+}
 const app= express();
 const versionsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/versions');
 const endPointsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/endpoints');
@@ -64,18 +68,21 @@ app.get('/emsp/endpoints', function(req, res) {
 app.post('/emsp/commands/START_SESSION',
 // Todo : auth of token B
     async function(req, res) {
-      console.log(req.body.result);
+      console.log(`session start:\n${JSON.stringify(req.body)}`);
+      const curSession = JSON.parse(fs.readFileSync('current-session.json'));
+      curSession.sessionId = req.body.sessionId;
+      fs.writeFileSync('current-session.json', JSON.stringify(curSession));
     });
 
 app.post('/emsp/commands/STOP_SESSION',
 // Todo : auth of token B
     async function(request, res) {
-      console.log(request.body.result);
+      console.log(`session stop:\n${JSON.stringify(request.body)}`);
     });
 
 app.put('/emsp/sessions', async function(req, res) {
   // Todo : auth of token B
-  console.log(req.body);
+  console.log(`session progress:\n${JSON.stringify(req.body)}`);
 });
 
 async function gettingVersions() {

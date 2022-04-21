@@ -70,3 +70,28 @@ Example:
 ```bash
 node start.js -v https://emsp.com/ocpi/2.2/versions -s AVAILABLE
 ```
+
+## Emulate EMSP session
+
+Set environment variable `MongoURI` as above and `ocppVersionsURL` to the OCPI CPO versions URL
+
+```bash
+node sampleEMSP.js
+```
+
+### Start a session
+
+Set environment variable `MongoURI` as above
+
+```bash
+node startSession.js 
+```
+After it starts, kill with ^C
+
+### Stop that session
+
+In the same terminal
+
+```bash
+node stopSession.js
+```
