@@ -6,13 +6,14 @@ async function stopSession() {
   const emspRecord = JSON.parse(fs.readFileSync('emsp.json'));
   console.log(emspRecord);
   const curSession = JSON.parse(fs.readFileSync('current-session.json'));
-  const url = curSession.commandsEndpoint.concat('STOP_SESSION');
-  console.log(`stopping session ${curSession.sessionId} on ${url}`);
+  const url = curSession.commandsEndpoint;
+  const stopSessionUrl=`${url.origin}${url.pathname}/STOP_SESSION${url.search}`;
+  console.log(`stopping session ${curSession.sessionId} on ${stopSessionUrl}`);
 
   const record = await fetchToken('tokenCWithEndpoints');
   const resURL=process.env.OCPI_PROBE_BASEURL
       .concat('/emsp/commands/STOP_SESSION');
-  await axios.post(url,
+  await axios.post(stopSessionUrl,
       {
         response_url: resURL,
         session_id: curSession.sessionId,
