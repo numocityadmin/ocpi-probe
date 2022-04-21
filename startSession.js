@@ -6,14 +6,15 @@ const axios= require('axios');
 async function startSession() {
   const emsprecord = JSON.parse(fs.readFileSync('emsp.json'));
   const tokenRecord = await fetchToken('tokenCWithEndpoints');
-  const url = tokenRecord.commandsEndpoint.url.concat('START_SESSION');
+  const url = new URL(tokenRecord.commandsEndpoint.url);
+  const startSessionUrl=`${url.origin}${url.pathname}/START_SESSION${url.search}`;
   fs.writeFileSync('current-session.json',
       JSON.stringify({commandsEndpoint: tokenRecord.commandsEndpoint.url}));
 
-  console.log(`starting a session at ${url}`);
+  console.log(`starting a session at ${startSessionUrl}`);
   const resURL=process.env.OCPI_PROBE_BASEURL
       .concat('/emsp/commands/START_SESSION');
-  const startResponse = await axios.post(url,
+  const startResponse = await axios.post(startSessionUrl,
       {
         response_url: resURL,
         location_id: 1234,
