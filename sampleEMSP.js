@@ -77,12 +77,12 @@ app.post('/emsp/commands/START_SESSION',
 app.post('/emsp/commands/STOP_SESSION',
 // Todo : auth of token B
     async function(request, res) {
-      console.log(`session stop:\n${JSON.stringify(request.body)}`);
+      console.log(`session stop:\n${JSON.stringify(request.body.data)}`);
     });
 
 app.put('/emsp/sessions', async function(req, res) {
   // Todo : auth of token B
-  console.log(`session progress:\n${JSON.stringify(req.body)}`);
+  console.log(`session progress:\n${JSON.stringify(req.body.data)}`);
 });
 
 async function gettingVersions() {
@@ -110,7 +110,7 @@ async function postTokenB(credentials) {
       {headers: {Authorization: `Token ${emspRecord.token}`}},
   )
       .then(async (res)=>{
-        this.tokenC=res.data.token;
+        this.tokenC=res.data.data.token;
       })
       .catch((err)=>{
         console.log(err);
