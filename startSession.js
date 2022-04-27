@@ -25,7 +25,7 @@ async function startSession() {
   ).catch((err)=>{
     console.log('error'+err);
   });
-  console.log(`start-response:\n${JSON.stringify(startResponse.data)}`);
+  console.log(`start-response:\n${JSON.stringify(startResponse.data.data)}`);
 }
 
 startSession();
