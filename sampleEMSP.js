@@ -72,17 +72,20 @@ app.post('/emsp/commands/START_SESSION',
       const curSession = JSON.parse(fs.readFileSync('current-session.json'));
       curSession.sessionId = req.body.sessionId;
       fs.writeFileSync('current-session.json', JSON.stringify(curSession));
+      res.end({status_code: 1000, data: {result: 'ACCEPTED'}});
     });
 
 app.post('/emsp/commands/STOP_SESSION',
 // Todo : auth of token B
     async function(request, res) {
       console.log(`session stop:\n${JSON.stringify(request.body)}`);
+      res.end({status_code: 1000, data: {result: 'ACCEPTED'}});
     });
 
 app.put('/emsp/sessions', async function(req, res) {
   // Todo : auth of token B
   console.log(`session progress:\n${JSON.stringify(req.body)}`);
+  res.end({status_code: 1000, data: {result: 'ACCEPTED'}});
 });
 
 async function gettingVersions() {
@@ -144,15 +147,6 @@ async function credentialsHandShake() {
   await storetheResult(commandsEndpoints[0], sessionsEndpoints[0], this.tokenC);
   return commandsEndpoints[0];
 }
-
-// async function storeSessionId(id) {
-//   const sessionID={
-//     identifier: 'SessionID',
-//     sessionId: id,
-//   };
-//   await storage.connect();
-//   await storage.upsert({collectionName, parameters: sessionID});
-// }
 
 async function completeProcess() {
   await credentialsHandShake();
