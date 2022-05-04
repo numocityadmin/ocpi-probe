@@ -99,8 +99,8 @@ async function gettingEndPoints(versions) {
   if (versions) {
     const endpoints = await axios.get(versions.url,
         {headers: {Authorization: `Token ${emspRecord.token}`}}).catch((err)=>{
-          console.log(err);
-        });
+      console.log(err);
+    });
     return endpoints.data.data.endpoints;
   } else {
     return 0;
