@@ -7,7 +7,7 @@ async function startSession() {
   const emsprecord = JSON.parse(fs.readFileSync('emsp.json'));
   const tokenRecord = await fetchToken('tokenCWithEndpoints');
   const url = new URL(tokenRecord.commandsEndpoint.url);
-  const startSessionUrl=`${url.origin}${url.pathname}/START_SESSION${url.search}`;
+  const startSessionUrl=`${url.origin}${url.pathname}START_SESSION${url.search}`;
   fs.writeFileSync('current-session.json',
       JSON.stringify({commandsEndpoint: tokenRecord.commandsEndpoint.url}));
 
@@ -25,7 +25,7 @@ async function startSession() {
   ).catch((err)=>{
     console.log('error'+err);
   });
-  console.log(`start-response:\n${JSON.stringify(startResponse.data)}`);
+  console.log(`start-response:\n${JSON.stringify(startResponse.data.data)}`);
 }
 
 startSession();

@@ -98,8 +98,10 @@ async function gettingVersions() {
 async function gettingEndPoints(versions) {
   if (versions) {
     const endpoints = await axios.get(versions.url,
-        {headers: {Authorization: `Token ${emspRecord.token}`}});
-    return endpoints.data.data[0].endpoints;
+        {headers: {Authorization: `Token ${emspRecord.token}`}}).catch((err)=>{
+          console.log(err);
+        });
+    return endpoints.data.data.endpoints;
   } else {
     return 0;
   }
@@ -111,7 +113,7 @@ async function postTokenB(credentials) {
       {headers: {Authorization: `Token ${emspRecord.token}`}},
   )
       .then(async (res)=>{
-        this.tokenC=res.data.token;
+        this.tokenC=res.data.data.token;
       })
       .catch((err)=>{
         console.log(err);
