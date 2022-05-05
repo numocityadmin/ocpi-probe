@@ -18,7 +18,7 @@ async function startSession() {
       {
         response_url: resURL,
         location_id: 1234,
-        token: emsprecord.idTag,
+        token: {uid: emsprecord.idTag, type: 'APP_USER'},
         evse_uid: emsprecord.evseWithConnectorId,
       },
       {headers: {Authorization: `Token ${tokenRecord.token}`}},

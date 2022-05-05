@@ -16,6 +16,7 @@
         "linebreak-style": ["off"],
         "complexity": ["error", {"max": 3}],
         "require-jsdoc": ["off"],
-        "new-cap": ["off"]
+        "new-cap": ["off"],
+        "max-len": [2, {"code": 100}]
     }
 }
