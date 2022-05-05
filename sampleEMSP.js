@@ -80,7 +80,7 @@ app.post('/emsp/commands/STOP_SESSION',
       console.log(`session stop:\n${JSON.stringify(request.body)}`);
     });
 
-app.put('/emsp/sessions', async function(req, res) {
+app.put('/emsp/sessions/IN/EMSP01/:sessionId', async function(req, res) {
   // Todo : auth of token B
   console.log(`session progress:\n${JSON.stringify(req.body)}`);
 });
