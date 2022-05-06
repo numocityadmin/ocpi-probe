@@ -49,7 +49,7 @@ app.get('/emsp/endpoints', function(req, res) {
   res.send({
     data: [{
       versions: '2.2',
-      endPoints: [{
+      endpoints: [{
         identifier: 'locations',
         role: 'SENDER',
         url: locationsURL,
@@ -84,6 +84,7 @@ app.post('/emsp/commands/STOP_SESSION',
 
 app.put('/emsp/sessions/IN/EMSP01/:sessionId', async function(req, res) {
   // Todo : auth of token B
+  console.log("sessionId: ",req.params.sessionId);
   console.log(`session progress:\n${JSON.stringify(req.body)}`);
   res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
 });
