@@ -47,7 +47,7 @@ app.get('/emsp/versions', function(req, res) {
 });
 app.get('/emsp/endpoints', function(req, res) {
   res.send({
-    data: [{
+    data: {
       versions: '2.2',
       endpoints: [{
         identifier: 'locations',
@@ -62,7 +62,7 @@ app.get('/emsp/endpoints', function(req, res) {
         role: 'RECEIVER',
         url: sessionsURL,
       },
-      ]}],
+      ]},
   });
 });
 app.post('/emsp/commands/START_SESSION',
