@@ -16,6 +16,7 @@ const app= express();
 const versionsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/versions');
 const endPointsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/endpoints');
 const locationsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/locations');
+const cdrsUrl=process.env.OCPI_PROBE_BASEURL.concat('/emsp/cdrs');
 const commandsURL=process.env.OCPI_PROBE_BASEURL
     .concat('/emsp/commands/');
 const sessionsURL=process.env.OCPI_PROBE_BASEURL
@@ -61,6 +62,10 @@ app.get('/emsp/endpoints', function(req, res) {
         identifier: 'sessions',
         role: 'RECEIVER',
         url: sessionsURL,
+      }, {
+        identifier: 'cdrs',
+        role: 'RECEIVER',
+        url: cdrsUrl,
       },
       ]},
   });
@@ -84,8 +89,14 @@ app.post('/emsp/commands/STOP_SESSION',
 
 app.put('/emsp/sessions/IN/EMSP01/:sessionId', async function(req, res) {
   // Todo : auth of token B
-  console.log("sessionId: ",req.params.sessionId);
+  console.log('sessionId: ', req.params.sessionId);
   console.log(`session progress:\n${JSON.stringify(req.body)}`);
+  res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
+});
+
+app.put('/emsp/cdrs', async function(req, res) {
+  console.log('cdrId: ', req.body.id);
+  console.log(`cdr Object :\n${JSON.stringify(req.body)}`);
   res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
 });
 
@@ -152,6 +163,7 @@ async function credentialsHandShake() {
 }
 
 async function completeProcess() {
+  console.log(process.env.OCPI_PROBE_BASEURL);
   await credentialsHandShake();
 }
 
