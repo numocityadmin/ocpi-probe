@@ -132,11 +132,12 @@ async function postTokenB(credentials) {
       });
 }
 
-async function storetheResult(commands, sessions, tokenC) {
+async function storetheResult(commands, sessions, tokenC,cdrs) {
   const result={
     identifier: 'tokenCWithEndpoints',
     commandsEndpoint: commands,
     sessionsEndpoints: sessions,
+    cdrsEndpoints:cdrs,
     token: tokenC,
   };
   await storage.connect();
@@ -154,11 +155,12 @@ async function credentialsHandShake() {
   const credentialsEndpoints=endPoints.filter((x)=>x.identifier=='credentials');
   const commandsEndpoints=endPoints.filter((x)=>x.identifier=='commands');
   const sessionsEndpoints=endPoints.filter((x)=>x.identifier=='sessions');
+  const cdrsEndpoints=endPoints.filter((x)=>x.identifier=='cdrs');
   if (credentialsEndpoints) {
     await postTokenB(credentialsEndpoints[0]);
   }
   console.log(this.tokenC);
-  await storetheResult(commandsEndpoints[0], sessionsEndpoints[0], this.tokenC);
+  await storetheResult(commandsEndpoints[0], sessionsEndpoints[0],this.tokenC,cdrsEndpoints[0]);
   return commandsEndpoints[0];
 }
 
