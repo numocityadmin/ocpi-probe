@@ -17,6 +17,7 @@ const versionsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/versions');
 const endPointsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/endpoints');
 const locationsURL=process.env.OCPI_PROBE_BASEURL.concat('/emsp/locations');
 const cdrsUrl=process.env.OCPI_PROBE_BASEURL.concat('/emsp/cdrs');
+const tariffsUrl=process.env.OCPI_PROBE_BASEURL.concat('/emsp/tariffs');
 const commandsURL=process.env.OCPI_PROBE_BASEURL
     .concat('/emsp/commands/');
 const sessionsURL=process.env.OCPI_PROBE_BASEURL
@@ -66,6 +67,11 @@ app.get('/emsp/endpoints', function(req, res) {
         identifier: 'cdrs',
         role: 'RECEIVER',
         url: cdrsUrl,
+      },
+      {
+        identifier: 'tariffs',
+        role: 'RECEIVER',
+        url: tariffsUrl,
       },
       ]},
   });
@@ -132,12 +138,13 @@ async function postTokenB(credentials) {
       });
 }
 
-async function storetheResult(commands, sessions, tokenC,cdrs) {
+async function storetheResult(commands, sessions, tokenC,cdrs,tariffs) {
   const result={
     identifier: 'tokenCWithEndpoints',
     commandsEndpoint: commands,
     sessionsEndpoints: sessions,
     cdrsEndpoints:cdrs,
+    tariffEndpoints:tariffs,
     token: tokenC,
   };
   await storage.connect();
@@ -156,11 +163,12 @@ async function credentialsHandShake() {
   const commandsEndpoints=endPoints.filter((x)=>x.identifier=='commands');
   const sessionsEndpoints=endPoints.filter((x)=>x.identifier=='sessions');
   const cdrsEndpoints=endPoints.filter((x)=>x.identifier=='cdrs');
+  const tariffEndpoints=endPoints.filter((x)=>x.identifier=='tariffs');
   if (credentialsEndpoints) {
     await postTokenB(credentialsEndpoints[0]);
   }
   console.log(this.tokenC);
-  await storetheResult(commandsEndpoints[0], sessionsEndpoints[0],this.tokenC,cdrsEndpoints[0]);
+  await storetheResult(commandsEndpoints[0], sessionsEndpoints[0],this.tokenC,cdrsEndpoints[0],tariffEndpoints[0]);
   return commandsEndpoints[0];
 }
 
