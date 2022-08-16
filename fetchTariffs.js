@@ -16,7 +16,7 @@ async function getTariffs(){
     ).catch((error)=>{
         console.log("error :",error);
     })
-    console.log(`tariff-fetch-response:\n${JSON.stringify(tariffs.data.data)}`);
+    console.log(`tariff-fetch-response:\n${tariffs.data.data}`);
 }
 
 getTariffs();
