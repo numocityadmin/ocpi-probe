@@ -100,6 +100,12 @@ app.put('/emsp/sessions/IN/EMSP01/:sessionId', async function(req, res) {
   res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
 });
 
+app.put('/emsp/tariffs', async function(req, res) {
+  // Todo : auth of token B
+  console.log(`Tariff Details:\n${JSON.stringify(req.body)}`);
+  res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
+});
+
 app.post('/emsp/cdrs', async function(req, res) {
   console.log('cdrId: ', req.body.id);
   console.log(`cdr Object :\n${JSON.stringify(req.body)}`);
