@@ -13,7 +13,7 @@ async function getCdrs(){
     ).catch((error)=>{
         console.log("error :",error);
     })
-    console.log(`cdr-fetch-response:\n${cdrs.data.data}`);
+    console.log(`cdr-fetch-response:\n${JSON.stringify(cdrs.data.data)}`);
 }else{
     console.log('Provide toDate and fromDate');
 }
