@@ -33,7 +33,9 @@ function checkCredentials({expectedHTTPstatus, expectedOCPIstatus}) {
   });
 }
 
-// OCPI Status code according to https://github.com/ocpi/ocpi/blob/master/status_codes.asciidoc#status_codes_3xxx_server_errors
+// OCPI Status code according to
+// https://github.com/ocpi/ocpi/blob/master/status_codes.asciidoc#status_codes_
+// 3xxx_server_errors
 // We use HTTP 500- not 200/201, which would mean the registration is created.
 it('returns 3001 when credentials POSTed and sender-versions URL is invalid',
     ()=> {

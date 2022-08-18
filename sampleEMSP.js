@@ -144,13 +144,13 @@ async function postTokenB(credentials) {
       });
 }
 
-async function storetheResult(commands, sessions, tokenC,cdrs,tariffs) {
+async function storetheResult(commands, sessions, tokenC, cdrs, tariffs) {
   const result={
     identifier: 'tokenCWithEndpoints',
     commandsEndpoint: commands,
     sessionsEndpoints: sessions,
-    cdrsEndpoints:cdrs,
-    tariffEndpoints:tariffs,
+    cdrsEndpoints: cdrs,
+    tariffEndpoints: tariffs,
     token: tokenC,
   };
   await storage.connect();
@@ -174,7 +174,8 @@ async function credentialsHandShake() {
     await postTokenB(credentialsEndpoints[0]);
   }
   console.log(this.tokenC);
-  await storetheResult(commandsEndpoints[0], sessionsEndpoints[0],this.tokenC,cdrsEndpoints[0],tariffEndpoints[0]);
+  await storetheResult(commandsEndpoints[0], sessionsEndpoints[0],
+      this.tokenC, cdrsEndpoints[0], tariffEndpoints[0]);
   return commandsEndpoints[0];
 }
 
