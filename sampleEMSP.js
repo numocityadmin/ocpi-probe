@@ -81,7 +81,7 @@ app.post('/emsp/commands/START_SESSION',
     async function(req, res) {
       console.log(`session start:\n${JSON.stringify(req.body)}`);
       const curSession = JSON.parse(fs.readFileSync('current-session.json'));
-      curSession.sessionId = req.body.sessionId;
+      curSession.sessionId = req.body.message;
       fs.writeFileSync('current-session.json', JSON.stringify(curSession));
       res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
     });
