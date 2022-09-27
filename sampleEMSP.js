@@ -49,15 +49,7 @@ app.get('/emsp/versions', function(req, res) {
 });
 app.get('/emsp/endpoints', function(req, res) {
   res.send({
-    data: [{
-      version: '1',
-      endpoints: [{
-        identifier: 'sessions',
-        role: 'RECEIVER',
-        url: sessionsURL,
-      }
-      ]     
-    },{
+    data:{
       version: '2.2',
       endpoints: [{
         identifier: 'locations',
@@ -81,7 +73,7 @@ app.get('/emsp/endpoints', function(req, res) {
         role: 'RECEIVER',
         url: tariffsUrl,
       },
-      ]}]
+      ]}
   });
 });
 app.post('/emsp/commands/START_SESSION',
