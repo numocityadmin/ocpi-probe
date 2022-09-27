@@ -50,6 +50,14 @@ app.get('/emsp/versions', function(req, res) {
 app.get('/emsp/endpoints', function(req, res) {
   res.send({
     data: [{
+      version: '1',
+      endpoints: [{
+        identifier: 'sessions',
+        role: 'RECEIVER',
+        url: sessionsURL,
+      }
+      ]     
+    },{
       version: '2.2',
       endpoints: [{
         identifier: 'locations',
