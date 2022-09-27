@@ -50,7 +50,7 @@ app.get('/emsp/versions', function(req, res) {
 app.get('/emsp/endpoints', function(req, res) {
   res.send({
     data: [{
-      versions: '2.2',
+      version: '2.2',
       endpoints: [{
         identifier: 'locations',
         role: 'SENDER',
