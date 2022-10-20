@@ -49,7 +49,7 @@ app.get('/emsp/versions', function(req, res) {
 });
 app.get('/emsp/endpoints', function(req, res) {
   res.send({
-    data:{
+    data: {
       version: '2.2',
       endpoints: [{
         identifier: 'locations',
@@ -73,7 +73,7 @@ app.get('/emsp/endpoints', function(req, res) {
         role: 'RECEIVER',
         url: tariffsUrl,
       },
-      ]}
+      ]},
   });
 });
 app.post('/emsp/commands/START_SESSION',
@@ -97,6 +97,12 @@ app.put('/emsp/sessions/IN/EMSP02/:sessionId', async function(req, res) {
   // Todo : auth of token B
   console.log('sessionId: ', req.params.sessionId);
   console.log(`session progress:\n${JSON.stringify(req.body)}`);
+  res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
+});
+
+app.patch('emsp/locations/:stationId/:numotype/:evse', async function(req, res) {
+  console.log('evseId: ', req.params.evse);
+  console.log(`patch body:\n${JSON.stringify(req.body)}`);
   res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
 });
 

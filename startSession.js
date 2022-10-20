@@ -20,7 +20,7 @@ async function startSession() {
         location_id: 1234,
         token: {uid: emsprecord.idTag, type: 'APP_USER'},
         evse_uid: emsprecord.evseWithConnectorId,
-        authorization_reference:"User-group",
+        authorization_reference: 'User-group',
       },
       {headers: {Authorization: `Token ${tokenRecord.token}`}},
   ).catch((err)=>{
