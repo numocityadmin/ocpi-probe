@@ -31,8 +31,8 @@ const tokenBforOCPI={
   url: versionsURL,
   roles: [{
     role: 'EMSP',
-    party_id: 'EMSP02',
-    country_code: 'IN',
+    party_id: emspRecord.partyId,
+    country_code: emspRecord.countryCode,
     business_details: {name: 'numorbml'},
   }],
 };
@@ -93,15 +93,31 @@ app.post('/emsp/commands/STOP_SESSION',
       res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
     });
 
-app.put('/emsp/sessions/IN/EMSP02/:sessionId', async function(req, res) {
+app.put(`/emsp/sessions/${emspRecord.countryCode}/${emspRecord.partyId}/:sessionId`, 
+async function(req, res) {
   // Todo : auth of token B
   console.log('sessionId: ', req.params.sessionId);
   console.log(`session progress:\n${JSON.stringify(req.body)}`);
   res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
 });
 
-app.patch('/emsp/locations/:stationId/:numotype/:evse', async function(req, res) {
+app.patch(`/emsp/locations/${emspRecord.countryCode}/${emspRecord.partyId}/:stationId/:numotype/:evse`, 
+async function(req, res) {
   console.log('evseId: ', req.params.evse);
+  console.log(`patch body:\n${JSON.stringify(req.body)}`);
+  res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
+});
+
+app.put(`/emsp/locations/${emspRecord.countryCode}/${emspRecord.partyId}/:stationId/:numotype/:evse`, 
+async function(req, res) {
+  console.log('evseId: ', req.params.evse);
+  console.log(`patch body:\n${JSON.stringify(req.body)}`);
+  res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
+});
+
+app.put(`/emsp/locations/${emspRecord.countryCode}/${emspRecord.partyId}/:stationId`, 
+async function(req, res) {
+  console.log('evseId: ', req.params.stationId);
   console.log(`patch body:\n${JSON.stringify(req.body)}`);
   res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
 });
