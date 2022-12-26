@@ -101,6 +101,12 @@ async function(req, res) {
   res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
 });
 
+app.post(`/emsp/sessions`, 
+async function(req, res) {
+  console.log(`session progress:\n${JSON.stringify(req.body)}`);
+  res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
+});
+
 app.patch(`/emsp/locations/${emspRecord.countryCode}/${emspRecord.partyId}/:stationId/:numotype/:evse`, 
 async function(req, res) {
   console.log('evseId: ', req.params.evse);
