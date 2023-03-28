@@ -107,14 +107,14 @@ async function(req, res) {
   res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
 });
 
-app.patch(`/emsp/locations/${emspRecord.countryCode}/${emspRecord.partyId}/:stationId/:evse`, 
+app.patch(`/emsp/locations/${emspRecord.countryCode}/${emspRecord.partyId}/:stationId/:numotype/:evse`, 
 async function(req, res) {
   console.log('evseId: ', req.params.evse);
   console.log(`patch body:\n${JSON.stringify(req.body)}`);
   res.end(JSON.stringify({status_code: 1000, data: {result: 'ACCEPTED'}}));
 });
 
-app.put(`/emsp/locations/${emspRecord.countryCode}/${emspRecord.partyId}/:stationId/:evse`, 
+app.put(`/emsp/locations/${emspRecord.countryCode}/${emspRecord.partyId}/:stationId/:numotype/:evse`, 
 async function(req, res) {
   console.log('evseId: ', req.params.evse);
   console.log(`patch body:\n${JSON.stringify(req.body)}`);
